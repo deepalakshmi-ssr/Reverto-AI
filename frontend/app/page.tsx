@@ -3,6 +3,8 @@ import DynamicCognitiveTree from './components/DynamicCognitiveTree';
 import ContextXRay from './components/ContextXRay';
 import DriftSentinel from './components/DriftSentinel';
 import ShadowSandbox from './components/ShadowSandbox';
+import PolicyLab from './components/PolicyLab';
+import ROIAnalytics from './components/ROIAnalytics';
 import {useState} from 'react';
 import {Activity, ShieldCheck, GitBranch, ScanSearch, Gauge, FlaskConical, Zap, CircleDollarSign, ChevronRight, Play, RotateCcw, Terminal, Settings2, Menu, X, CheckCircle2, AlertTriangle, Cpu, Layers3} from 'lucide-react';
 import {motion, AnimatePresence} from 'framer-motion';
@@ -47,7 +49,13 @@ function WorkspacePage({active}:{active:string}){
     }
     if (active === 'Shadow Sandbox') {
   return <ShadowSandbox />;
-   }
+    }
+    if (active === 'Policy Lab') {
+  return <PolicyLab />;
+    }
+    if (active === 'ROI & Reliability') {
+  return <ROIAnalytics />;
+    }
  const data:Record<string,{tag:string;title:string;description:string;cards:[string,string,string][]}>={
  'Cognitive Tree':{tag:'STATE GRAPH / MEMORY GOVERNANCE',title:'Cognitive State Tree',description:'Inspect the execution graph, snapshots, branch lineage and rollback boundaries.',cards:[['Root goal','Committed','Stable goal anchor for the current task.'],['Reasoning branch','Inspectable','Branch-level state inspection and pruning preview.'],['Rollback checkpoint','Available','Restore a prior verified cognitive state.']]},
  'Context X-Ray':{tag:'CONTEXT INSPECTION / DIFF ENGINE',title:'Context X-Ray',description:'Compare context snapshots and isolate injected, stale or conflicting instructions.',cards:[['Snapshot comparison','Ready','Compare retained context against a selected checkpoint.'],['Change detection','Demo','Review additions, removals and altered constraints.'],['Prune preview','Safe preview','Preview a proposed context cleanup before applying.']]},
