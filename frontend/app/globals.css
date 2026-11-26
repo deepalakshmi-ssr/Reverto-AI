@@ -1119,3 +1119,551 @@
   border-radius: 10px;
   overflow: hidden;
 }
+/* ================================
+   CONTEXT X-RAY
+================================ */
+
+.cxray {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 8px 0 30px;
+  color: #e8edf6;
+}
+
+.cxray-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cxray-eyebrow {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #8290a9;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.cxray-header h1 {
+  font-size: 28px;
+  letter-spacing: -0.8px;
+  margin: 0;
+}
+
+.cxray-header p {
+  color: #8995aa;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.cxray-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cxray-btn {
+  border: 1px solid #283348;
+  border-radius: 9px;
+  padding: 11px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cxray-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cxray-btn.secondary {
+  background: #111a29;
+  color: #d5deec;
+}
+
+.cxray-btn.secondary:hover {
+  background: #1a2638;
+}
+
+.cxray-btn.primary {
+  background: #6366f1;
+  color: #fff;
+  border-color: #6366f1;
+}
+
+.cxray-btn.primary:hover {
+  background: #7375ff;
+}
+
+.cxray-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.cxray-metric {
+  border: 1px solid #202c40;
+  background: linear-gradient(145deg, #121b2b, #0d1421);
+  border-radius: 13px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.cxray-metric-label {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  font-weight: 700;
+  color: #8492aa;
+}
+
+.cxray-metric strong {
+  font-size: 25px;
+  letter-spacing: -0.7px;
+}
+
+.cxray-metric-sub {
+  color: #718099;
+  font-size: 11px;
+}
+
+.cxray-main-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 18px;
+}
+
+.cxray-panel {
+  background: #0e1624;
+  border: 1px solid #202c40;
+  border-radius: 14px;
+  padding: 22px;
+  min-width: 0;
+}
+
+.cxray-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.cxray-panel-header h2,
+.cxray-pruning-heading h2 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.cxray-panel-header p,
+.cxray-pruning-heading p {
+  font-size: 12px;
+  color: #8290a8;
+  margin-top: 7px;
+}
+
+.cxray-live {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #8c9ab1;
+  white-space: nowrap;
+}
+
+.cxray-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 9px #10b98170;
+}
+
+.cxray-capacity {
+  margin-top: 25px;
+}
+
+.cxray-capacity-labels {
+  display: flex;
+  justify-content: space-between;
+  color: #a3afc3;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+
+.cxray-capacity-track {
+  height: 9px;
+  border-radius: 20px;
+  background: #1b2738;
+  overflow: hidden;
+}
+
+.cxray-capacity-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #6366f1, #06b6d4);
+  transition: width 0.5s ease;
+}
+
+.cxray-stack {
+  display: flex;
+  height: 25px;
+  margin-top: 22px;
+  border-radius: 7px;
+  overflow: hidden;
+  gap: 2px;
+  background: #101827;
+}
+
+.cxray-stack-segment {
+  border: none;
+  min-width: 0;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.2s;
+}
+
+.cxray-stack-segment:hover,
+.cxray-stack-segment.selected {
+  opacity: 1;
+  filter: brightness(1.25);
+}
+
+.cxray-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 19px;
+}
+
+.cxray-legend-item {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #b7c3d5;
+  padding: 11px 9px;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 12px;
+  transition: 0.2s;
+}
+
+.cxray-legend-item:hover {
+  background: #162235;
+}
+
+.cxray-legend-item.active {
+  background: #17243a;
+  border-color: #293b56;
+}
+
+.cxray-legend-item.discarded {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.cxray-legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.cxray-legend-tokens {
+  color: #7f8da5;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.cxray-panel-footer {
+  border-top: 1px solid #202c40;
+  margin-top: 14px;
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  color: #75839a;
+  font-size: 10px;
+}
+
+.cxray-inspector {
+  display: flex;
+  flex-direction: column;
+}
+
+.cxray-inspector-content {
+  margin-top: 23px;
+}
+
+.cxray-inspector-icon {
+  width: 43px;
+  height: 43px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 17px;
+}
+
+.cxray-inspector-content h3 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.cxray-inspector-description {
+  color: #8996aa;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 9px;
+}
+
+.cxray-inspector-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 23px;
+}
+
+.cxray-inspector-stats > div {
+  padding: 14px;
+  border-radius: 10px;
+  background: #131f30;
+  border: 1px solid #223147;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cxray-inspector-stats span {
+  font-size: 9px;
+  color: #8593aa;
+  letter-spacing: 1px;
+}
+
+.cxray-inspector-stats strong {
+  font-size: 17px;
+}
+
+.cxray-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 22px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #202c40;
+  color: #8c99ad;
+  font-size: 12px;
+}
+
+.cxray-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.cxray-status.retained {
+  color: #34d399;
+  background: #10b98117;
+  border: 1px solid #10b98130;
+}
+
+.cxray-status.compressed {
+  color: #fbbf24;
+  background: #f59e0b17;
+  border: 1px solid #f59e0b30;
+}
+
+.cxray-status.discarded {
+  color: #f87171;
+  background: #ef444417;
+  border: 1px solid #ef444430;
+}
+
+.cxray-inspector-list {
+  margin-top: 19px;
+}
+
+.cxray-inspector-list h4 {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  color: #9eabc0;
+  margin-bottom: 13px;
+}
+
+.cxray-content-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: #b1bed0;
+  font-size: 11px;
+  padding: 9px 0;
+  border-bottom: 1px solid #182335;
+}
+
+.cxray-content-item span {
+  color: #64748b;
+}
+
+.cxray-breakdown {
+  overflow: hidden;
+}
+
+.cxray-table-wrap {
+  overflow-x: auto;
+  margin-top: 22px;
+}
+
+.cxray-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 650px;
+}
+
+.cxray-table th {
+  font-size: 9px;
+  color: #718099;
+  letter-spacing: 1px;
+  padding: 13px 12px;
+  border-bottom: 1px solid #202c40;
+}
+
+.cxray-table td {
+  padding: 14px 12px;
+  font-size: 11px;
+  color: #bac5d6;
+  border-bottom: 1px solid #182335;
+}
+
+.cxray-table tbody tr {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cxray-table tbody tr:hover {
+  background: #142034;
+}
+
+.cxray-table tbody tr.selected-row {
+  background: #17243a;
+}
+
+.cxray-table-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.cxray-table-bar {
+  height: 6px;
+  width: 110px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #1d293b;
+}
+
+.cxray-table-bar > div {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.cxray-pruning-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cxray-pruning-symbol {
+  width: 43px;
+  height: 43px;
+  border-radius: 12px;
+  background: #6366f115;
+  border: 1px solid #6366f140;
+  color: #a5b4fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.cxray-pruning-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  margin-top: 22px;
+}
+
+.cxray-pruning-card {
+  background: #131f30;
+  border: 1px solid #223147;
+  border-radius: 11px;
+  padding: 17px;
+}
+
+.cxray-pruning-card > span {
+  color: #7d8ba2;
+  font-size: 9px;
+  letter-spacing: 1.1px;
+}
+
+.cxray-pruning-card strong {
+  display: block;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.cxray-pruning-card p {
+  color: #8795aa;
+  font-size: 11px;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+
+@media (max-width: 1100px) {
+  .cxray-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cxray-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .cxray-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cxray-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cxray-pruning-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cxray-panel {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 450px) {
+  .cxray-metrics {
+    grid-template-columns: 1fr;
+  }
+}
