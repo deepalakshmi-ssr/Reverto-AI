@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import {
   ReactFlow,
   Background,
@@ -9,6 +9,7 @@ import {
   MarkerType,
   Node,
   Edge,
+  Viewport,
 } from "@xyflow/react";
 
 import CognitiveFlowNode from "./CognitiveFlowNode";
@@ -31,6 +32,12 @@ export default function CognitiveFlowCanvas({
   showPruned,
   onSelectNode,
 }: Props) {
+  const viewportRef = useRef<Viewport>({
+    x: 0,
+    y: 0,
+    zoom: 1,
+  });
+
   const graph = useMemo(() => {
     const visibleExecutionNodes = execution.nodes.filter(
       (node) => showPruned || node.status !== "pruned"
@@ -93,8 +100,10 @@ export default function CognitiveFlowCanvas({
         edges={graph.edges}
         nodeTypes={nodeTypes}
         onNodeClick={(_, node) => onSelectNode(node.id)}
-        fitView
-        fitViewOptions={{ padding: 0.2 }}
+        onMoveEnd={(_, viewport) => {
+          viewportRef.current = viewport;
+        }}
+        defaultViewport={viewportRef.current}
         minZoom={0.2}
         maxZoom={2}
         proOptions={{ hideAttribution: true }}
