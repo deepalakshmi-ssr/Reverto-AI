@@ -928,3 +928,194 @@
     align-items: flex-start;
   }
 }
+/* ==========================================
+   REACT FLOW COGNITIVE GRAPH
+========================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+.react-flow {
+  background: #0b1220 !important;
+}
+
+.react-flow__background {
+  background-color: #0b1220;
+}
+
+.react-flow__controls {
+  background: #111827 !important;
+  border: 1px solid #334155 !important;
+  box-shadow: none !important;
+}
+
+.react-flow__controls button {
+  background: #111827 !important;
+  fill: #e2e8f0 !important;
+  border-bottom: 1px solid #334155 !important;
+}
+
+.react-flow__controls button:hover {
+  background: #1e293b !important;
+}
+
+.react-flow__minimap {
+  background: #111827 !important;
+  border: 1px solid #334155 !important;
+}
+
+.react-flow__attribution {
+  display: none !important;
+}
+
+.react-flow__edge-path {
+  stroke-width: 2.5px;
+}
+
+.react-flow__edge-text {
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.react-flow__node {
+  font-family: Inter, Arial, sans-serif;
+}
+
+.react-flow__node.selected {
+  outline: none;
+}
+
+.react-flow__handle {
+  width: 8px !important;
+  height: 8px !important;
+  background: #94a3b8 !important;
+  border: 2px solid #0b1220 !important;
+}
+/* ==========================================
+   COGNITIVE FLOW CUSTOM NODES
+========================================== */
+
+.cognitive-flow-node {
+  width: 280px;
+  padding: 17px;
+  border: 1px solid;
+  border-radius: 13px;
+  background: #131d2e;
+  color: #e8edf6;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.cognitive-flow-node.flow-node-selected {
+  transform: translateY(-1px);
+}
+
+.flow-node-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 13px;
+}
+
+.flow-node-id {
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.flow-node-status {
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.7px;
+}
+
+.cognitive-flow-node h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #f1f5f9;
+}
+
+.cognitive-flow-node p {
+  font-size: 11px;
+  line-height: 1.65;
+  color: #94a3b8;
+  margin: 0 0 14px;
+}
+
+.flow-node-action {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid #253247;
+  padding-top: 11px;
+}
+
+.flow-node-action span {
+  font-size: 9px;
+  font-weight: 900;
+  color: #64748b;
+  letter-spacing: 1px;
+}
+
+.flow-node-action strong {
+  font-size: 11px;
+  font-weight: 600;
+  color: #cbd5e1;
+  word-break: break-word;
+}
+
+.cognitive-flow-node .react-flow__handle {
+  width: 9px !important;
+  height: 9px !important;
+  border: 2px solid #0b1220 !important;
+  background: #94a3b8 !important;
+}
+/* ==========================================
+   REACT FLOW CANVAS CONTAINER
+========================================== */
+
+.cognitive-flow-canvas {
+  width: 100%;
+  height: 720px;
+  min-height: 600px;
+  border: 1px solid #243247;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b1220;
+  position: relative;
+}
+
+.cognitive-flow-canvas .react-flow {
+  width: 100%;
+  height: 100%;
+}
+
+.cognitive-flow-canvas .react-flow__pane {
+  cursor: grab;
+}
+
+.cognitive-flow-canvas .react-flow__pane:active {
+  cursor: grabbing;
+}
+
+.cognitive-flow-canvas .react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+.cognitive-flow-canvas .react-flow__minimap-mask {
+  fill: rgba(9, 13, 22, 0.75);
+}
+
+.cognitive-flow-canvas .react-flow__controls {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cognitive-flow-canvas .react-flow__minimap {
+  border-radius: 10px;
+  overflow: hidden;
+}

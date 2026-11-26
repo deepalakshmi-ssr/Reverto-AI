@@ -11,26 +11,20 @@ import {
   CognitiveExecutionData,
   CognitiveNodeData,
 } from "./cognitiveTypes";
+import CognitiveFlowCanvas from "./CognitiveFlowCanvas";
 
 export default function DynamicCognitiveTree() {
   const [execution, setExecution] =
     useState<CognitiveExecutionData>(initialExecution);
 
-  const [selectedNode, setSelectedNode] =
-    useState<CognitiveNodeData | null>(initialExecution.nodes[0]);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(
+    initialExecution.nodes[0]?.id ?? null
+  );
 
   const [showPruned, setShowPruned] = useState(true);
 
-  const visibleNodes = execution.nodes.filter(
-    (node) => showPruned || node.status !== "pruned"
-  );
-
-  const rootNode = visibleNodes.find(
-    (node) => node.parentId === null
-  );
-
-  const getChildren = (nodeId: string) =>
-    visibleNodes.filter((node) => node.parentId === nodeId);
+  const selectedNode =
+    execution.nodes.find((node) => node.id === selectedNodeId) ?? null;
 
   const statusColor = (status: string) => {
     switch (status) {
@@ -45,56 +39,6 @@ export default function DynamicCognitiveTree() {
       default:
         return "#64748b";
     }
-  };
-
-  const renderNode = (node: CognitiveNodeData) => {
-    const children = getChildren(node.id);
-
-    return (
-      <div key={node.id} className="dynamic-node-container">
-        <div
-          className={`dynamic-cognitive-node ${
-            selectedNode?.id === node.id ? "selected" : ""
-          }`}
-          onClick={() => setSelectedNode(node)}
-          style={{
-            borderLeft: `4px solid ${statusColor(node.status)}`,
-          }}
-        >
-          <div className="dynamic-node-header">
-            <span className="dynamic-node-id">{node.id}</span>
-            <span
-              className="dynamic-node-status"
-              style={{ color: statusColor(node.status) }}
-            >
-              {node.status.toUpperCase()}
-            </span>
-          </div>
-
-          <h4>{node.title}</h4>
-
-          <p>{node.description}</p>
-
-          <div className="dynamic-node-action">
-            {node.action}
-          </div>
-        </div>
-
-        {children.length > 0 && (
-          <>
-            <div className="dynamic-node-connector" />
-
-            <div
-              className={`dynamic-children ${
-                children.length > 1 ? "multiple" : ""
-              }`}
-            >
-              {children.map((child) => renderNode(child))}
-            </div>
-          </>
-        )}
-      </div>
-    );
   };
 
   const addExecutionStep = () => {
@@ -120,7 +64,7 @@ export default function DynamicCognitiveTree() {
     );
 
     setExecution(updatedExecution);
-    setSelectedNode(newNode);
+    setSelectedNodeId(newNode.id);
   };
 
   const simulateFailure = () => {
@@ -153,12 +97,12 @@ export default function DynamicCognitiveTree() {
     );
 
     setExecution(recoveredExecution);
-    setSelectedNode(recoveryNode);
+    setSelectedNodeId(recoveryNode.id);
   };
 
   const resetExecution = () => {
     setExecution(initialExecution);
-    setSelectedNode(initialExecution.nodes[0]);
+    setSelectedNodeId(initialExecution.nodes[0]?.id ?? null);
   };
 
   const committedCount = execution.nodes.filter(
@@ -243,9 +187,12 @@ export default function DynamicCognitiveTree() {
             </label>
           </div>
 
-          <div className="dynamic-cognitive-graph">
-            {rootNode && renderNode(rootNode)}
-          </div>
+          <CognitiveFlowCanvas
+            execution={execution}
+            selectedNodeId={selectedNodeId}
+            showPruned={showPruned}
+            onSelectNode={setSelectedNodeId}
+          />
         </div>
 
         <aside className="dynamic-cognitive-inspector">
