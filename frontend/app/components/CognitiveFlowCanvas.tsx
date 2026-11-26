@@ -10,10 +10,11 @@ import {
   Node,
   Edge,
 } from "@xyflow/react";
-import "@xyflow/react/dist/style.css";
 
 import CognitiveFlowNode from "./CognitiveFlowNode";
 import { CognitiveExecutionData } from "./cognitiveTypes";
+import { layoutCognitiveGraph } from "./cognitiveLayout";
+import "@xyflow/react/dist/style.css";
 
 type Props = {
   execution: CognitiveExecutionData;
@@ -22,9 +23,7 @@ type Props = {
   onSelectNode: (nodeId: string) => void;
 };
 
-const nodeTypes = {
-  cognitive: CognitiveFlowNode,
-};
+const nodeTypes = { cognitive: CognitiveFlowNode };
 
 export default function CognitiveFlowCanvas({
   execution,
@@ -32,85 +31,40 @@ export default function CognitiveFlowCanvas({
   showPruned,
   onSelectNode,
 }: Props) {
-  const visibleExecutionNodes = execution.nodes.filter(
-    (node) => showPruned || node.status !== "pruned"
-  );
+  const graph = useMemo(() => {
+    const visibleExecutionNodes = execution.nodes.filter(
+      (node) => showPruned || node.status !== "pruned"
+    );
 
-  const visibleIds = new Set(
-    visibleExecutionNodes.map((node) => node.id)
-  );
+    const visibleIds = new Set(
+      visibleExecutionNodes.map((node) => node.id)
+    );
 
-  const nodes: Node[] = useMemo(() => {
-    const horizontalSpacing = 370;
-    const verticalSpacing = 220;
+    const rawNodes: Node[] = visibleExecutionNodes.map((node) => ({
+      id: node.id,
+      type: "cognitive",
+      position: { x: 0, y: 0 },
+      data: {
+        title: node.title,
+        description: node.description,
+        status: node.status,
+        action: node.action,
+        nodeId: node.id,
+      },
+      selected: node.id === selectedNodeId,
+    }));
 
-    return visibleExecutionNodes.map((node, index) => {
-      let position = { x: 0, y: 0 };
-
-      switch (node.id) {
-        case "ROOT":
-          position = { x: 450, y: 0 };
-          break;
-        case "N01":
-          position = { x: 450, y: verticalSpacing };
-          break;
-        case "N02":
-          position = { x: 450, y: verticalSpacing * 2 };
-          break;
-        case "N03":
-          position = { x: 100, y: verticalSpacing * 3 };
-          break;
-        case "N04":
-          position = { x: 100, y: verticalSpacing * 4 };
-          break;
-        case "N05":
-          position = { x: 800, y: verticalSpacing * 3 };
-          break;
-        case "N06":
-          position = { x: 800, y: verticalSpacing * 4 };
-          break;
-        case "N07":
-          position = { x: 800, y: verticalSpacing * 5 };
-          break;
-        default:
-          position = {
-            x: 450 + (index % 3) * horizontalSpacing,
-            y: verticalSpacing * 6 + Math.floor(index / 3) * 180,
-          };
-      }
-
-      return {
-        id: node.id,
-        type: "cognitive",
-        position,
-        data: {
-          title: node.title,
-          description: node.description,
-          status: node.status,
-          action: node.action,
-          nodeId: node.id,
-        },
-        selected: node.id === selectedNodeId,
-      };
-    });
-  }, [visibleExecutionNodes, selectedNodeId]);
-
-  const edges: Edge[] = useMemo(() => {
-    return execution.edges
+    const rawEdges: Edge[] = execution.edges
       .filter(
         (edge) =>
-          visibleIds.has(edge.source) && visibleIds.has(edge.target)
+          visibleIds.has(edge.source) &&
+          visibleIds.has(edge.target)
       )
       .map((edge) => {
         let stroke = "#64748b";
 
-        if (edge.type === "rollback") {
-          stroke = "#f59e0b";
-        }
-
-        if (edge.type === "recovery") {
-          stroke = "#22c55e";
-        }
+        if (edge.type === "rollback") stroke = "#f59e0b";
+        if (edge.type === "recovery") stroke = "#22c55e";
 
         return {
           id: edge.id,
@@ -128,13 +82,15 @@ export default function CognitiveFlowCanvas({
           },
         };
       });
-  }, [execution.edges, visibleIds]);
+
+    return layoutCognitiveGraph(rawNodes, rawEdges, "TB");
+  }, [execution, selectedNodeId, showPruned]);
 
   return (
     <div className="cognitive-flow-canvas">
       <ReactFlow
-        nodes={nodes}
-        edges={edges}
+        nodes={graph.nodes}
+        edges={graph.edges}
         nodeTypes={nodeTypes}
         onNodeClick={(_, node) => onSelectNode(node.id)}
         fitView
@@ -144,7 +100,9 @@ export default function CognitiveFlowCanvas({
         proOptions={{ hideAttribution: true }}
       >
         <Background gap={24} size={1} color="#263449" />
+
         <Controls />
+
         <MiniMap
           nodeColor={(node) => {
             const status = node.data?.status;
