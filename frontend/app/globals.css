@@ -469,3 +469,158 @@
     flex-direction: column;
   }
 }
+/* ==========================================
+   BRANCHING COGNITIVE EXECUTION GRAPH
+========================================== */
+
+.branch-graph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 850px;
+  padding: 25px 20px 45px;
+  transform-origin: top center;
+  transition: transform 0.25s ease;
+}
+
+.graph-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.graph-row.single {
+  width: 100%;
+}
+
+.graph-row.single > .cognitive-node {
+  width: 390px;
+}
+
+.graph-connector {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.graph-connector.vertical {
+  width: 2px;
+  height: 34px;
+  background: #b8c7dc;
+  margin: 0 auto;
+}
+
+.graph-connector.branching {
+  height: 35px;
+  width: 600px;
+  border-top: 2px solid #b8c7dc;
+  margin: 0 auto;
+  position: relative;
+}
+
+.graph-connector.branching::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -35px;
+  height: 35px;
+  width: 2px;
+  background: #b8c7dc;
+}
+
+.graph-connector.branching::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 17px;
+  width: 2px;
+  background: #b8c7dc;
+}
+
+.graph-row.branches {
+  display: grid;
+  grid-template-columns: minmax(340px, 1fr) minmax(340px, 1fr);
+  gap: 45px;
+  align-items: start;
+  width: 100%;
+  max-width: 950px;
+}
+
+.graph-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  position: relative;
+  padding: 0 10px;
+}
+
+.graph-branch > .cognitive-node {
+  width: 100%;
+  max-width: 400px;
+}
+
+.branch-label {
+  margin-bottom: 16px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.failure-branch .branch-label {
+  color: #b91c1c;
+  background: #fff1f2;
+  border: 1px solid #fecaca;
+}
+
+.recovery-branch .branch-label {
+  color: #15803d;
+  background: #ecfdf5;
+  border: 1px solid #bbf7d0;
+}
+
+.failure-branch .cognitive-node {
+  border-color: #fecaca;
+}
+
+.recovery-branch .cognitive-node {
+  border-color: #bbf7d0;
+}
+
+.failure-branch .graph-connector.vertical {
+  background: #f0a5a5;
+}
+
+.recovery-branch .graph-connector.vertical {
+  background: #86d6aa;
+}
+
+.cognitive-canvas {
+  overflow: auto;
+  padding: 30px 15px;
+}
+
+.branch-graph .cognitive-node {
+  box-sizing: border-box;
+}
+
+.branch-graph .cognitive-node:hover {
+  z-index: 2;
+}
+
+.branch-graph .cognitive-node.selected {
+  z-index: 3;
+}
+
+@media (max-width: 900px) {
+  .branch-graph {
+    min-width: 750px;
+  }
+
+  .graph-row.branches {
+    gap: 20px;
+  }
+}

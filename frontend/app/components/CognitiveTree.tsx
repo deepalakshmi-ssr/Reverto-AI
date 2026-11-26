@@ -158,6 +158,36 @@ export default function CognitiveTree() {
     recovered: nodes.filter(n => n.status === 'recovered').length
   };
 
+  const getNode = (id: string) => visibleNodes.find(node => node.id === id);
+
+  const renderNode = (id: string) => {
+    const node = getNode(id);
+
+    if (!node) return null;
+
+    const Icon = statusIcons[node.status];
+
+    return (
+      <div
+        key={node.id}
+        className={`cognitive-node ${node.status} ${
+          selected === node.id ? 'selected' : ''
+        }`}
+        onClick={() => setSelected(node.id)}
+      >
+        <div className="cognitive-node-icon">
+          <Icon size={17} />
+        </div>
+
+        <div className="cognitive-node-info">
+          <small>{node.id}</small>
+          <strong>{node.title}</strong>
+          <span>{node.status.toUpperCase()}</span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="cognitive-workspace">
 
@@ -208,7 +238,7 @@ export default function CognitiveTree() {
           <div className="panel-header">
             <div>
               <h3>Execution graph</h3>
-              <p>Selectable cognitive states and branch relationships</p>
+              <p>Branch-oriented execution state visualization</p>
             </div>
 
             <GitBranch size={20} />
@@ -231,32 +261,55 @@ export default function CognitiveTree() {
 
           <div className="cognitive-canvas">
             <div
-              className="cognitive-nodes"
+              className="branch-graph"
               style={{ transform: `scale(${zoom / 100})` }}
             >
-              {visibleNodes.map(node => {
-                const Icon = statusIcons[node.status];
 
-                return (
-                  <div
-                    key={node.id}
-                    className={`cognitive-node ${node.status} ${
-                      selected === node.id ? 'selected' : ''
-                    }`}
-                    onClick={() => setSelected(node.id)}
-                  >
-                    <div className="cognitive-node-icon">
-                      <Icon size={17} />
-                    </div>
+              <div className="graph-row single">
+                {renderNode('ROOT')}
+              </div>
 
-                    <div className="cognitive-node-info">
-                      <small>{node.id}</small>
-                      <strong>{node.title}</strong>
-                      <span>{node.status.toUpperCase()}</span>
-                    </div>
-                  </div>
-                );
-              })}
+              <div className="graph-connector vertical"/>
+
+              <div className="graph-row single">
+                {renderNode('N01')}
+              </div>
+
+              <div className="graph-connector vertical"/>
+
+              <div className="graph-row single">
+                {renderNode('N02')}
+              </div>
+
+              <div className="graph-connector branching"/>
+
+              <div className="graph-row branches">
+
+                <div className="graph-branch failure-branch">
+                  <div className="branch-label">FAILURE PATH</div>
+                  {renderNode('N03')}
+
+                  {getNode('N04') && (
+                    <>
+                      <div className="graph-connector vertical"/>
+                      {renderNode('N04')}
+                    </>
+                  )}
+                </div>
+
+                <div className="graph-branch recovery-branch">
+                  <div className="branch-label">RECOVERY PATH</div>
+                  {renderNode('N05')}
+
+                  <div className="graph-connector vertical"/>
+                  {renderNode('N06')}
+
+                  <div className="graph-connector vertical"/>
+                  {renderNode('N07')}
+                </div>
+
+              </div>
+
             </div>
           </div>
 
@@ -276,7 +329,7 @@ export default function CognitiveTree() {
               <h3>State inspector</h3>
               <p>Selected execution state</p>
             </div>
-            <ShieldCheck size={20} />
+            <ShieldCheck size={20}/>
           </div>
 
           {selectedNode && (
@@ -311,7 +364,7 @@ export default function CognitiveTree() {
               </div>
 
               <div className="inspector-note">
-                <ShieldCheck size={17} />
+                <ShieldCheck size={17}/>
                 <span>
                   This state belongs to the current simulated execution history.
                 </span>
