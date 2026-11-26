@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from app.core.config import settings
 from app.api.runtime import router as runtime_router
-from app.api.context import router as context_router
+from app.api.context import router as context_router 
+from app.api.drift import router as drift_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -12,6 +13,7 @@ app = FastAPI(
 
 app.include_router(runtime_router, prefix=settings.API_PREFIX)
 app.include_router(context_router, prefix=settings.API_PREFIX)
+app.include_router(drift_router, prefix=settings.API_PREFIX)
 
 @app.get("/")
 async def root():
