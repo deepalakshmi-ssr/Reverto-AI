@@ -1,6 +1,7 @@
 'use client';
 import DynamicCognitiveTree from './components/DynamicCognitiveTree';
 import ContextXRay from './components/ContextXRay';
+import DriftSentinel from './components/DriftSentinel';
 import {useState} from 'react';
 import {Activity, ShieldCheck, GitBranch, ScanSearch, Gauge, FlaskConical, Zap, CircleDollarSign, ChevronRight, Play, RotateCcw, Terminal, Settings2, Menu, X, CheckCircle2, AlertTriangle, Cpu, Layers3} from 'lucide-react';
 import {motion, AnimatePresence} from 'framer-motion';
@@ -36,9 +37,12 @@ export default function Home(){
 function WorkspacePage({active}:{active:string}){
     if (active === 'Cognitive Tree') {
   return <DynamicCognitiveTree />;
-   }
+    }
     if (active === 'Context X-Ray') {
         return <ContextXRay />;
+    }
+    if (active === 'Drift Sentinel') {
+  return <DriftSentinel />;
     }
  const data:Record<string,{tag:string;title:string;description:string;cards:[string,string,string][]}>={
  'Cognitive Tree':{tag:'STATE GRAPH / MEMORY GOVERNANCE',title:'Cognitive State Tree',description:'Inspect the execution graph, snapshots, branch lineage and rollback boundaries.',cards:[['Root goal','Committed','Stable goal anchor for the current task.'],['Reasoning branch','Inspectable','Branch-level state inspection and pruning preview.'],['Rollback checkpoint','Available','Restore a prior verified cognitive state.']]},
