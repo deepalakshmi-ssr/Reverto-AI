@@ -1,119 +1,75 @@
-# CSHR — Cognitive State-Healing Runtime
+# 🧠 Reverto AI — Cognitive State-Healing Runtime
 
-**Enterprise-style interactive prototype** for deterministic context pruning, goal-drift interception, loop detection, shadow transaction previews and agent reliability telemetry.
+<p align="center">
+  <img src="https://img.shields.io/badge/Reverto%20AI-Runtime%20Reliability-6C63FF?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js"/>
+  <img src="https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel"/>
+</p>
 
-## Included modules
+<p align="center">
+  <b>Observe. Intercept. Recover.</b>
+</p>
 
-- Corporate-style responsive dashboard and runtime status panel
-- Split-screen Standard Agent vs CSHR-protected simulation (3 preset failure scenarios)
-- Interactive cognitive state tree with zoom controls and committed/pruned/recovery states
-- Context X-Ray diff inspector (negative constraint + recovery branch)
-- Drift/loop signal telemetry and threshold controls
-- SQL speculative shadow transaction / blast-radius preview
-- Chaos injector / policy lab controls
-- ROI & reliability scorecard with demo metrics
-- FastAPI backend with `/health`, `/api/v1/runtime`, `/api/v1/context`, `/api/v1/drift` endpoints
+<p align="center">
+  An interactive simulation platform exploring AI-agent reliability, cognitive state monitoring, context management, behavioral drift and runtime recovery.
+</p>
 
-> **Prototype note:** The frontend uses deterministic local demo data and simulated timing, not live LLM calls, actual vector embeddings, or real database mutations. The backend stores data in-memory only. Do not connect this prototype to production systems without implementing and reviewing adapters, policy enforcement, authentication, and security controls.
+<p align="center">
+  🌐 <a href="https://reverto-ai-frontend.vercel.app">Live Demo</a> •
+  💻 <a href="https://github.com/deepalakshmi-ssr/Reverto-AI">Repository</a>
+</p>
 
-## Run the web console
+---
 
-Requirements: Node.js 20+ and npm.
+## 📌 About
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+Reverto AI is a conceptual runtime reliability and cognitive state-healing interface designed to explore how AI-agent execution can be monitored, analyzed and conceptually managed when instability, context degradation or behavioral drift occurs.
 
-Open http://localhost:3000.
+The platform provides a centralized control-dashboard experience featuring interactive simulation modules for execution analysis, context inspection, drift monitoring, policy experimentation and reliability visualization.
 
-## Run the backend API
+> ⚠️ Reverto AI is currently a frontend simulation. Metrics and runtime behaviors are illustrative and are not connected to real AI agents or production telemetry.
 
-Requirements: Python 3.11+.
+## 🎯 Objectives
 
-```bash
-cd backend
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
+- 🔍 Explore AI-agent execution observability.
+- 🌳 Visualize cognitive execution paths.
+- 🧩 Examine context structures and context management.
+- 📊 Represent behavioral drift and reliability indicators.
+- 🛡️ Explore runtime intervention and recovery concepts.
+- 📈 Visualize simulated reliability and efficiency outcomes.
 
-Open http://localhost:8000/docs for interactive API documentation.
+## 🚀 Features
 
-## API routes (`/api/v1`)
+| Module | Description |
+|---|---|
+| 📊 Overview | Centralized runtime reliability dashboard |
+| ⚔️ Arena Simulator | Interactive execution scenario simulation |
+| 🌳 Cognitive Tree | Visual representation of cognitive execution paths |
+| 🔬 Context X-Ray | Context inspection and structural visualization |
+| 🛡️ Drift Sentinel | Simulated behavioral drift monitoring |
+| 🧪 Shadow Sandbox | Isolated scenario experimentation |
+| 🧬 Policy Lab | Simulated runtime policy experimentation |
+| 📈 ROI & Reliability | Reliability and estimated efficiency visualization |
 
-| Method | Route | Description |
-|--------|-------|-------------|
-| POST | `/api/v1/runtime/start` | Start a new agent execution (query params: `agent_name`, `task`) |
-| GET | `/api/v1/runtime/{execution_id}` | Get a specific execution |
-| GET | `/api/v1/runtime/` | List all executions |
-| POST | `/api/v1/runtime/{execution_id}/complete` | Mark execution as complete |
-| POST | `/api/v1/runtime/{execution_id}/fail` | Mark execution as failed (query param: `error`) |
-| POST | `/api/v1/context/register` | Register context (query params: `execution_id`, `source`; JSON body: context dict) |
-| GET | `/api/v1/context/execution/{execution_id}` | List contexts for an execution |
-| GET | `/api/v1/context/` | List all contexts |
-| POST | `/api/v1/drift/analyze` | Analyze drift (query param: `execution_id`; JSON body: `baseline_metrics`, `current_metrics`, `thresholds`) |
-| GET | `/api/v1/drift/execution/{execution_id}` | List drift records for an execution |
-| GET | `/api/v1/drift/` | List all drift records |
-| GET | `/health` | Health check |
+## 🏗️ Architecture
 
-## Environment variables
+```mermaid
+flowchart TD
+    A[User] --> B[Reverto AI Frontend]
+    B --> C[Overview]
+    B --> D[Arena Simulator]
+    B --> E[Cognitive Tree]
+    B --> F[Context X-Ray]
+    B --> G[Drift Sentinel]
+    B --> H[Shadow Sandbox]
+    B --> I[Policy Lab]
+    B --> J[ROI and Reliability]
 
-### Backend (`backend/.env`)
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `ALLOWED_ORIGINS` | `http://localhost:3000` | Comma-separated CORS allowed origins |
-
-Copy `backend/.env.example` to `backend/.env` and edit.
-
-### Frontend (`frontend/.env.local`)
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `NEXT_PUBLIC_API_URL` | `http://localhost:8000` | Backend base URL (no trailing slash) |
-
-Copy `frontend/.env.example` to `frontend/.env.local` and edit.
-
-## Deployment
-
-### Backend (Render)
-
-The repo includes `render.yaml` at the root for one-click Render deployment.
-
-**Steps:**
-1. Push this repo to GitHub.
-2. Go to [Render Dashboard](https://dashboard.render.com) → **New** → **Blueprint**.
-3. Connect your GitHub repo — Render picks up `render.yaml` automatically.
-4. After the first deploy, copy the service URL (e.g. `https://reverto-ai-backend.onrender.com`).
-5. Verify: `https://reverto-ai-backend.onrender.com/health` and `.../docs`.
-
-### Frontend (Vercel)
-
-1. Go to [Vercel](https://vercel.com) → **New Project** → import the same GitHub repo.
-2. Set **Root Directory** to `frontend`.
-3. Add environment variable: `NEXT_PUBLIC_API_URL` = your Render URL.
-4. Deploy. Copy the Vercel URL (e.g. `https://reverto-ai.vercel.app`).
-5. Go back to the Render service → **Environment** → set `ALLOWED_ORIGINS` to the Vercel URL.
-6. Trigger a Render redeploy.
-
-### Live URLs (fill in after deploy)
-
-- **Frontend:** `https://<your-project>.vercel.app`
-- **Backend:** `https://<your-service>.onrender.com`
-
-## Stack
-
-Next.js 15 · React 19 · TypeScript · Tailwind-ready CSS · Framer Motion · Lucide · FastAPI · Python 3.12.
-
-## Layout
-
-- `frontend/app`: app entry, layout, styling and components
-- `frontend/app/lib/api.ts`: typed backend API client
-- `backend/app/main.py`: FastAPI app with CORS middleware
-- `backend/app/api/`: route handlers (runtime, context, drift)
-- `backend/app/engines/`: business logic engines
-- `render.yaml`: Render deployment config
+    C --> K[Simulated Runtime Data]
+    D --> K
+    E --> K
+    F --> K
+    G --> K
+    H --> K
+    I --> K
+    J --> K
