@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { contextListAll, contextRegister } from "../lib/api";
 
 type ContextSegment = {
   id: string;
@@ -98,6 +99,10 @@ export default function ContextXRay() {
   const [selected, setSelected] = useState<string>("conversation");
   const [pruning, setPruning] = useState(false);
 
+  useEffect(() => {
+    contextListAll();
+  }, []);
+
   const totalTokens = segments.reduce(
     (sum, segment) => sum + segment.tokens,
     0
@@ -123,6 +128,10 @@ export default function ContextXRay() {
 
   const pruneContext = () => {
     setPruning(true);
+    contextRegister("context-xray", "context-optimizer", {
+      activeTokens,
+      segmentCount: segments.length,
+    });
 
     setTimeout(() => {
       setSegments((prev) =>

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: reverto-ai-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: ALLOWED_ORIGINS
+        sync: false   # set this to your Vercel URL after the frontend is deployed

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { driftAnalyze, driftListAll } from "../lib/api";
 
 type DriftEvent = {
   id: number;
@@ -52,17 +53,27 @@ export default function DriftSentinel() {
   const [blocked, setBlocked] = useState(2);
   const [selected, setSelected] = useState<number | null>(1);
 
+  useEffect(() => {
+    driftListAll();
+  }, []);
+
   const selectedEvent = events.find((event) => event.id === selected);
 
   function interceptAll() {
     setBlocked((prev) => prev + events.length);
     setEvents([]);
     setSelected(null);
+    driftAnalyze(
+      "drift-sentinel",
+      { alignment_score: 0.92, loop_similarity: 0.18 },
+      { alignment_score: 0.84, loop_similarity: 0.45 }
+    );
   }
 
   function restore() {
     setEvents(initialEvents);
     setSelected(1);
+    driftListAll();
   }
 
   const severityColor: Record<string, string> = {
